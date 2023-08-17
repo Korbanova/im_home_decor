@@ -106,32 +106,6 @@
 .best-products {
   padding-top: 120px;
   padding-bottom: 130px;
-
-  .carousel-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 50px;
-
-    .carousel-title {
-      @include head-lora0-32;
-    }
-
-    .carousel-arrows {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      a {
-        text-decoration: none;
-        cursor: pointer;
-
-        &:first-child {
-          margin-right: 30px;
-        }
-      }
-    }
-  }
 }
 
 .info {
@@ -143,7 +117,7 @@
 
   .container {
     .info-title {
-      @include head-lora0-32;
+      @include head-lora-32;
       margin-bottom: 5px;
     }
 
@@ -193,7 +167,7 @@
 
   .container {
     .reviews-title {
-      @include head-lora0-32;
+      @include head-lora-32;
       margin-bottom: 50px;
       text-align: center;
     }
