@@ -11,6 +11,7 @@ import {environment} from "../../../../environments/environment";
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
+  count: number = 1;
   recommendedProducts: ProductType[] = [];
   product!: ProductType;
   serverStaticPath = environment.serverStaticPath;
@@ -58,5 +59,15 @@ export class DetailComponent implements OnInit {
         this.recommendedProducts = data;
       })
   }
+
+  updateCount(value: number) {
+    this.count = value;
+    console.log(this.count)
+  }
+
+  addToCart() {
+    alert('Добавлено в корзину: ' + this.count);
+  }
+
 }
 

@@ -5,15 +5,15 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import { CategoryFilterComponent } from './components/category-filter/category-filter.component';
-import { CountSeletorComponent } from './components/count-seletor/count-seletor.component';
+import { CountSelectorComponent } from './components/count-selector/count-selector.component';
 
 @NgModule({
-  declarations: [PasswordRepeatDirective, ProductCardComponent, CategoryFilterComponent, CountSeletorComponent],
+  declarations: [PasswordRepeatDirective, ProductCardComponent, CategoryFilterComponent, CountSelectorComponent],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule
   ],
-  exports: [PasswordRepeatDirective, ProductCardComponent, CategoryFilterComponent, CountSeletorComponent]
+  exports: [PasswordRepeatDirective, ProductCardComponent, CategoryFilterComponent, CountSelectorComponent]
 })
 export class SharedModule { }
