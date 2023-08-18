@@ -1,27 +1,27 @@
+# Общее описание
+
+Проект представляет собой интернет-магазин в сфере домашнего декора.
+
+## Основные характеристики:
+- В шапке реализована страница регистрации и авторизации(Используются реактивные формы)
+- Только после авторизации пользователь попадает на главную страницу
+- По меню в шапке и футере пользователь может перейти в "Каталог"
+- На странице каталога реализован фильтр товаров и сортировка
+- С карточки товара по ссылке "Подробнее" можно перейти на страницу подробной информации о товаре
+- Также для карточки товара реализован счетчик для увеличения или уменьшенияя колличества товаров
+
+
+Планы на ближайшее будущее:
+- Реализовать добавление товаров в Корзину
+- Реализовать добавление товаров в Избранное
+- Релизовать личный кабинет
+- Релизовать страницу оформления заказа
+
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
 
-## Development server
+## Запуск проекта
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Для запука сервера необходимо выполнить команду `npm start`
+- Для запука фроненда необходимо выполнить команду `ng serve --open` или команду `ng serve` и перейдите по адресу `http://localhost:4200/`.
