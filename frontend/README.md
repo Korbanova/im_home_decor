@@ -17,17 +17,13 @@
 - Релизовать личный кабинет
 - Релизовать страницу оформления заказа
 
-# Frontend
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
-
+## База данных
+- Используется база данных [MongoDB](https://www.mongodb.com/) бесплатная версия Comminity edition
+- Файл с настройками находится backend/src/config/config.js
+- Для заполнения данными БД в папке backend/migrations лежат файлы с данными
+- Для миграции данных в бд используется migrate-mongo. Команда для установки `npm i -g migrate-mongo`. и далее выполнить команду `migrate-mongo up`
 
 ## Запуск проекта
 
 - Для запука сервера необходимо выполнить команду `npm start`
 - Для запука фроненда необходимо выполнить команду `ng serve --open` или команду `ng serve` и перейдите по адресу `http://localhost:4200/`.
-
-## База данных
-- Используется база данных [MongoDB](https://www.mongodb.com/) бесплатная версия Comminity edition
-- Для заполнения данными БД в папке backend/migrations лежат файлы с данными
-- Для миграции данных в бд используется migrate-mongo. Команда для установки `npm i -g migrate-mongo`. и далее выполнить команду `migrate-mongo up`
