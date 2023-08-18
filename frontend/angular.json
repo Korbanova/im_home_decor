@@ -98,12 +98,10 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/favicon.ico"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "@angular/material/prebuilt-themes/indigo-pink.css"
             ],
             "scripts": []
           }
