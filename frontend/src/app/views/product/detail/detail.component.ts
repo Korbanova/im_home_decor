@@ -4,6 +4,8 @@ import {ProductType} from "../../../../types/product.type";
 import {ProductService} from "../../../shared/services/product.service";
 import {ActivatedRoute} from "@angular/router";
 import {environment} from "../../../../environments/environment";
+import {CartType} from "../../../../types/cart.type";
+import {CartService} from "../../../shared/services/cart.service";
 
 @Component({
   selector: 'app-detail',
@@ -43,14 +45,31 @@ export class DetailComponent implements OnInit {
   }
 
   constructor(private productService: ProductService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private cartService: CartService) {
   }
 
   ngOnInit() {
+    //Получение инф-ции о товаре
     this.activatedRoute.params.subscribe(params => {
       this.productService.getProduct(params['url'])
         .subscribe((data: ProductType) => {
-          this.product = data;
+
+          // Получение данных с корзины
+          this.cartService.getCart()
+            .subscribe((cartData: CartType) => {
+              if(cartData){
+                // найти в корзине тот товар, с кот-м сейчас работаем
+                const productInCart = cartData.items.find(item => item.product.id === data.id);
+
+                if(productInCart){
+                  data.countInCart = productInCart.quantity;
+                  // чтобы сразу полз-лю показать кол-во товаров в countSelector
+                  this.count = data.countInCart;
+                }
+              }
+              this.product = data;
+            })
         })
     })
 
@@ -62,11 +81,29 @@ export class DetailComponent implements OnInit {
 
   updateCount(value: number) {
     this.count = value;
-    console.log(this.count)
+
+    // обновление корзины
+    if (this.product.countInCart) {
+      this.cartService.updateCart(this.product.id, this.count)
+        .subscribe((data: CartType) => {
+          this.product.countInCart = this.count;
+        });
+    }
   }
 
   addToCart() {
-    alert('Добавлено в корзину: ' + this.count);
+    this.cartService.updateCart(this.product.id, this.count)
+      .subscribe((data: CartType) => {
+        this.product.countInCart = this.count;
+      });
+  }
+
+  removeFromCart() {
+    this.cartService.updateCart(this.product.id, 0)
+      .subscribe((data: CartType) => {
+        this.product.countInCart = 0;
+        this.count = 1;
+      });
   }
 
 }

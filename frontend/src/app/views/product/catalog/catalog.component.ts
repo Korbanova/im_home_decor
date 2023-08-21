@@ -8,6 +8,8 @@ import {ActiveParamsUtil} from "../../../shared/utils/active-params.util";
 import {ActiveParamsType} from "../../../../types/active-params.type";
 import {AppliedFilterType} from "../../../../types/applied-filter.type";
 import {debounceTime} from "rxjs";
+import {CartService} from "../../../shared/services/cart.service";
+import {CartType} from "../../../../types/cart.type";
 
 @Component({
   selector: 'app-catalog',
@@ -28,14 +30,22 @@ export class CatalogComponent implements OnInit {
     {name: 'По убыванию цены', value: 'price-desc'}
   ];
   pages: number[] = [];
+  cart: CartType | null = null;
 
   constructor(private productService: ProductService,
               private categoryService: CategoryService,
               private activatedRoute: ActivatedRoute,
+              private cartService: CartService,
               private router: Router) {
   }
 
   ngOnInit() {
+    // Получение данных с корзины
+    this.cartService.getCart()
+      .subscribe((data: CartType) => {
+        this.cart = data;
+      })
+
     // Получение категорий
     this.categoryService.getCategoriesWithTypes()
       .subscribe(data => {
@@ -47,58 +57,72 @@ export class CatalogComponent implements OnInit {
             debounceTime(500)
           )
           .subscribe(params => {
-          this.activeParams = ActiveParamsUtil.processParams(params);
+            this.activeParams = ActiveParamsUtil.processParams(params);
 
-          this.appliedFilters = [];
-          this.activeParams.types.forEach(url => {
-            for (let i = 0; i < this.categoriesWithTypes.length; i++) {
-              const foundType = this.categoriesWithTypes[i].types.find(item => item.url === url);
-              if (foundType) {
-                this.appliedFilters.push({
-                  name: foundType.name,
-                  urlParam: url
-                })
+            this.appliedFilters = [];
+            this.activeParams.types.forEach(url => {
+              for (let i = 0; i < this.categoriesWithTypes.length; i++) {
+                const foundType = this.categoriesWithTypes[i].types.find(item => item.url === url);
+                if (foundType) {
+                  this.appliedFilters.push({
+                    name: foundType.name,
+                    urlParam: url
+                  })
+                }
               }
+            })
+            if (this.activeParams.heightFrom) {
+              this.appliedFilters.push({
+                name: 'Высота: от ' + this.activeParams.heightFrom + ' см',
+                urlParam: 'heightFrom'
+              })
             }
+
+            if (this.activeParams.heightTo) {
+              this.appliedFilters.push({
+                name: 'Высота: до ' + this.activeParams.heightTo + ' см',
+                urlParam: 'heightTo'
+              })
+            }
+
+            if (this.activeParams.diameterFrom) {
+              this.appliedFilters.push({
+                name: 'Диаметр: от ' + this.activeParams.diameterFrom + ' см',
+                urlParam: 'diameterFrom'
+              })
+            }
+
+            if (this.activeParams.diameterTo) {
+              this.appliedFilters.push({
+                name: 'Диаметр: до ' + this.activeParams.diameterTo + ' см',
+                urlParam: 'diameterTo'
+              })
+            }
+
+            //Запрос на продукты
+            this.productService.getProducts(this.activeParams)
+              .subscribe(data => {
+                this.pages = [];
+                for (let i = 1; i <= data.pages; i++) {
+                  this.pages.push(i);
+                }
+                if (this.cart && this.cart.items.length > 0) {
+                  this.products = data.items.map(product => {
+                    if(this.cart){
+                      const productInCart = this.cart.items.find(item => item.product.id === product.id);
+
+                      if(productInCart){
+                        product.countInCart = productInCart.quantity;
+                      }
+                    }
+                    return product;
+                  });
+                } else {
+                  this.products = data.items;
+                }
+
+              })
           })
-          if (this.activeParams.heightFrom) {
-            this.appliedFilters.push({
-              name: 'Высота: от ' + this.activeParams.heightFrom + ' см',
-              urlParam: 'heightFrom'
-            })
-          }
-
-          if (this.activeParams.heightTo) {
-            this.appliedFilters.push({
-              name: 'Высота: до ' + this.activeParams.heightTo + ' см',
-              urlParam: 'heightTo'
-            })
-          }
-
-          if (this.activeParams.diameterFrom) {
-            this.appliedFilters.push({
-              name: 'Диаметр: от ' + this.activeParams.diameterFrom + ' см',
-              urlParam: 'diameterFrom'
-            })
-          }
-
-          if (this.activeParams.diameterTo) {
-            this.appliedFilters.push({
-              name: 'Диаметр: до ' + this.activeParams.diameterTo + ' см',
-              urlParam: 'diameterTo'
-            })
-          }
-
-          //Запрос на продукты
-          this.productService.getProducts(this.activeParams)
-            .subscribe(data => {
-              this.pages = [];
-              for (let i = 1; i <= data.pages; i++) {
-                this.pages.push(i);
-              }
-              this.products = data.items;
-            })
-        })
       })
   }
 

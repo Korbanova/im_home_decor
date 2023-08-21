@@ -1,9 +1,15 @@
 @import "../../../../assets/styles/variables";
+
 .product-card {
   position: relative;
   width: 291px;
   height: 498px;
   box-sizing: border-box;
+
+  &.is-light {
+    height: auto;
+    cursor: pointer;
+  }
 
   .product-card-favorite {
     position: absolute;
