@@ -51,13 +51,13 @@ export class CartComponent implements OnInit {
     this.productService.getBestProducts()
       .subscribe((data: ProductType[]) => {
         this.extraProducts = data;
-        this.calculateTotal();
       });
 
     //Получение актуального сосотояния корзины
     this.cartService.getCart()
       .subscribe((data: CartType) => {
         this.cart = data;
+        this.calculateTotal();
       })
   }
 
@@ -70,6 +70,15 @@ export class CartComponent implements OnInit {
         this.totalCount += item.quantity;
       })
     }
+  }
 
+  updateCount(id: string, count: number) {
+    if (this.cart) {
+      this.cartService.updateCart(id, count)
+        .subscribe((data: CartType) => {
+          this.cart = data;
+          this.calculateTotal();
+        })
+    }
   }
 }
