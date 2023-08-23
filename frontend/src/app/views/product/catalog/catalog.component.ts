@@ -10,6 +10,11 @@ import {AppliedFilterType} from "../../../../types/applied-filter.type";
 import {debounceTime} from "rxjs";
 import {CartService} from "../../../shared/services/cart.service";
 import {CartType} from "../../../../types/cart.type";
+import {FavoriteService} from "../../../shared/services/favorite.service";
+import {AuthService} from "../../../core/auth/auth.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {DefaultResponseType} from "../../../../types/default-response.type";
+import {FavoriteType} from "../../../../types/favorite.type";
 
 @Component({
   selector: 'app-catalog',
@@ -31,22 +36,60 @@ export class CatalogComponent implements OnInit {
   ];
   pages: number[] = [];
   cart: CartType | null = null;
+  favoriteProducts: FavoriteType[] | null = null;
 
   constructor(private productService: ProductService,
               private categoryService: CategoryService,
               private activatedRoute: ActivatedRoute,
               private cartService: CartService,
-              private router: Router) {
+              private router: Router,
+              private favoriteService: FavoriteService,
+              private authService: AuthService,
+              private _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
     // Получение данных с корзины
     this.cartService.getCart()
-      .subscribe((data: CartType) => {
-        this.cart = data;
-      })
+      .subscribe((dataCart: CartType | DefaultResponseType) => {
+        if ((dataCart as DefaultResponseType).error !== undefined) {
+          throw new Error((dataCart as DefaultResponseType).message);
+        }
 
-    // Получение категорий
+        this.cart = dataCart as CartType;
+
+        if (this.authService.getIsLoggedIn()) {
+          // Получение Избранного
+          this.favoriteService.getFavorites()
+            .subscribe(
+              {
+                next: (data: FavoriteType[] | DefaultResponseType) => {
+                  if ((data as DefaultResponseType).error !== undefined) {
+                    const error = (data as DefaultResponseType).message;
+                    // Получение категорий и продуктов
+                    this.processCatalog();
+                    throw new Error(error);
+                  }
+                  this.favoriteProducts = data as FavoriteType[];
+                  // Получение категорий и продуктов
+                  this.processCatalog();
+                },
+                error: (error) => {
+                  // Получение категорий и продуктов
+                  this.processCatalog();
+                }
+              }
+            )
+        } else {
+          // Получение категорий и продуктов
+          this.processCatalog();
+        }
+
+      })
+  }
+
+  // Получение категорий
+  processCatalog() {
     this.categoryService.getCategoriesWithTypes()
       .subscribe(data => {
         this.categoriesWithTypes = data;
@@ -99,19 +142,20 @@ export class CatalogComponent implements OnInit {
               })
             }
 
-            //Запрос на продукты
+            // Запрос на продукты
             this.productService.getProducts(this.activeParams)
               .subscribe(data => {
                 this.pages = [];
                 for (let i = 1; i <= data.pages; i++) {
                   this.pages.push(i);
                 }
+                // Установка товаров, кот-е есть в корзине
                 if (this.cart && this.cart.items.length > 0) {
                   this.products = data.items.map(product => {
-                    if(this.cart){
+                    if (this.cart) {
                       const productInCart = this.cart.items.find(item => item.product.id === product.id);
 
-                      if(productInCart){
+                      if (productInCart) {
                         product.countInCart = productInCart.quantity;
                       }
                     }
@@ -119,6 +163,17 @@ export class CatalogComponent implements OnInit {
                   });
                 } else {
                   this.products = data.items;
+                }
+
+                // Установка товаров, кот-е есть в избранном
+                if (this.favoriteProducts) {
+                  this.products = this.products.map(product => {
+                    const productInFavorite = this.favoriteProducts?.find(item => item.id === product.id);
+                    if (productInFavorite) {
+                      product.isInFavorite = true;
+                    }
+                    return product;
+                  })
                 }
 
               })

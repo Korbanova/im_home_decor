@@ -27,12 +27,24 @@ export class AuthService {
       rememberMe
     })
   }
+
   signup(email: string, password: string, passwordRepeat: string): Observable<DefaultResponseType | LoginResponseType> {
     return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'signup', {
       email,
       password,
       passwordRepeat
     })
+  }
+
+  refresh(): Observable<DefaultResponseType | LoginResponseType> {
+    const tokens = this.getTokens();
+    if (tokens && tokens.refreshToken) {
+      return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'refresh', {
+        refreshToken : tokens.refreshToken
+      })
+    }
+
+    throw throwError(() => 'Can not use token');
   }
 
   logout(): Observable<DefaultResponseType> {
@@ -83,5 +95,6 @@ export class AuthService {
       localStorage.removeItem(this.userIdKey);
     }
   }
+
 
 }
