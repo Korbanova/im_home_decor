@@ -1,0 +1,30 @@
+@import "variables";
+@import "mixing";
+
+.personal-title {
+  margin-bottom: 30px;
+  @include head-lora-32;
+}
+
+.personal-pages-selector {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+  font-family: 'Lora', sans-serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: $green-text-color;
+
+  .personal-page {
+    border-bottom: 2px solid #B6D5B9;
+    padding: 0 15px 13px;
+    cursor: pointer;
+
+    &.active {
+      border-bottom: 2px solid #519057;
+
+    }
+  ;
+  }
+
+}

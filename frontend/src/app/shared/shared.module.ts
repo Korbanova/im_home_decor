@@ -6,9 +6,10 @@ import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import { CategoryFilterComponent } from './components/category-filter/category-filter.component';
 import { CountSelectorComponent } from './components/count-selector/count-selector.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
-  declarations: [PasswordRepeatDirective, ProductCardComponent, CategoryFilterComponent, CountSelectorComponent],
+  declarations: [PasswordRepeatDirective, ProductCardComponent, CategoryFilterComponent, CountSelectorComponent, LoaderComponent],
   imports: [
     CommonModule,
     FormsModule,
