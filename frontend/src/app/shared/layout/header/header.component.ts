@@ -6,7 +6,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {CategoryWithTypeType} from "../../../../types/category-with-type.type";
 import {CartService} from "../../services/cart.service";
-import {debounceTime} from "rxjs";
+import {audit, debounceTime} from "rxjs";
 import {ProductService} from "../../services/product.service";
 import {ProductType} from "../../../../types/product.type";
 import {environment} from "../../../../environments/environment";
@@ -18,7 +18,7 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  isLogged: boolean = false
+  isLogged: boolean = false;
 
   @Input() categories: CategoryWithTypeType[] = [];
   count: number = 0;

@@ -49,19 +49,24 @@
 
         .favorite-product-name {
           margin-right: 20px;
-          width: 567px;
+          width: 565px;
           margin-left: 24px;
           font-size: 20px;
           color: #2C2C2C;
         }
 
         .favorite-product-price {
-          margin-right: 193px;
+          margin-right: 76px;
           width: 100px;
           font-family: 'Montserrat', sans-serif;
           font-size: 22px;
           font-weight: 600;
           color: $gray-text-color;
+        }
+
+        .count-box{
+          margin-right: 20px;
+          width: 97px;
         }
 
         .favorite-product-action button {

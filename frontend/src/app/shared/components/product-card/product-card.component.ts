@@ -22,12 +22,14 @@ export class ProductCardComponent implements OnInit {
   @Input() isLight: boolean = false;
 
   @Input() countInCart: number | undefined = 0;
+  isLogged: boolean = false;
 
   constructor(private cartService: CartService,
               private favoriteService: FavoriteService,
               private authService: AuthService,
               private _snackBar: MatSnackBar,
               private router: Router) {
+    this.isLogged = this.authService.getIsLoggedIn();
   }
 
   ngOnInit() {

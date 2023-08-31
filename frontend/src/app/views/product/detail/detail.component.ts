@@ -22,6 +22,7 @@ export class DetailComponent implements OnInit {
   recommendedProducts: ProductType[] = [];
   product!: ProductType;
   serverStaticPath = environment.serverStaticPath;
+  isLogged: boolean = false;
 
   customOptions: OwlOptions = {
     loop: true,
@@ -55,6 +56,7 @@ export class DetailComponent implements OnInit {
               private favoriteService: FavoriteService,
               private authService: AuthService,
               private _snackBar: MatSnackBar) {
+    this.isLogged = this.authService.getIsLoggedIn();
   }
 
   ngOnInit() {
@@ -84,7 +86,7 @@ export class DetailComponent implements OnInit {
             });
 
           // Получение данных об Избранных
-          if (this.authService.getIsLoggedIn()) {
+          if (this.isLogged) {
             this.favoriteService.getFavorites()
               .subscribe((data: FavoriteType[] | DefaultResponseType) => {
                 if ((data as DefaultResponseType).error !== undefined) {
@@ -111,7 +113,7 @@ export class DetailComponent implements OnInit {
   }
 
   updateToFavorite() {
-    if (!this.authService.getIsLoggedIn()) {
+    if (!this.isLogged) {
       this._snackBar.open('Для добавления в избранное необходимо авторизоваться');
       return;
     }
