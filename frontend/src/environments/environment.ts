@@ -1,4 +1,4 @@
 export const environment = {
-  api: "http://localhost:3000/api/",
-  serverStaticPath: 'http://localhost:3000/images/products/'
+  api: "https://ws-example.site/api/",
+  serverStaticPath: 'https://ws-example.site/products/'
 };
