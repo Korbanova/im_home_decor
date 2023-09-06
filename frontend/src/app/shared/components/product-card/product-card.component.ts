@@ -17,7 +17,8 @@ import {Router} from "@angular/router";
 })
 export class ProductCardComponent implements OnInit {
   @Input() product!: ProductType;
-  serverStaticPath = environment.serverStaticPath;
+  // serverStaticPath = environment.serverStaticPath;
+  serverStaticPath = 'http://localhost:3000/images/products/';
   count: number = 1;
   @Input() isLight: boolean = false;
 
