@@ -4,7 +4,7 @@ module.exports = {
     async up(db, client) {
         const salt = crypto.randomBytes(128).toString('base64');
         const passwordHash = crypto.pbkdf2Sync('12345678', salt, 1, 128, 'sha1').toString('base64');
-        await db.createCollection('users').insert({
+        await db.collection('users').insertOne({
             firstName: 'Тест',
             lastName: 'Тестов',
             fatherName: 'Тестовович',
