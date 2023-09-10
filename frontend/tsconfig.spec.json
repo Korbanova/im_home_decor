@@ -10,5 +10,9 @@
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
-  ]
+  ],
+//  "files": [
+//    "src/test.ts",
+//    "src/polyfills.ts",
+//  ]
 }
