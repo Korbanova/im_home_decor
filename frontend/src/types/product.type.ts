@@ -8,7 +8,7 @@ export type ProductType = {
   temperature: string,
   height: number,
   diameter: number,
-  url: string
+  url: string,
   type: {
     id: string,
     name: string,
