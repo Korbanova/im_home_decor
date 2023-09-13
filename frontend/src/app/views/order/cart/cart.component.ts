@@ -41,8 +41,8 @@ export class CartComponent implements OnInit {
   extraProducts: ProductType[] = [];
   cart: CartType | null = null;
   serverStaticPath = environment.serverStaticPath;
-  totalAmount: number = 0
-  totalCount: number = 0
+  totalAmount = 0
+  totalCount = 0
 
   constructor(private productService: ProductService,
               private cartService: CartService) {

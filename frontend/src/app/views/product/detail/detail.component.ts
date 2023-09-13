@@ -18,11 +18,11 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
-  count: number = 1;
+  count = 1;
   recommendedProducts: ProductType[] = [];
   product!: ProductType;
   serverStaticPath = environment.serverStaticPath;
-  isLogged: boolean = false;
+  isLogged = false;
 
   customOptions: OwlOptions = {
     loop: true,

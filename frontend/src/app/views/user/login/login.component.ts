@@ -10,16 +10,15 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
 
   loginForm = this.fb.group({
     email: ['', [Validators.email, Validators.required]],
     password: ['', [Validators.required]],
-    rememberMe: [false],
-
-  })
+    rememberMe: [false]
+  });
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,

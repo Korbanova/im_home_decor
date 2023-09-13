@@ -9,12 +9,12 @@ import {environment} from "../../../environments/environment";
   providedIn: 'root'
 })
 export class AuthService {
-  public accessTokenKey: string = 'accessToken';
-  public refreshTokenKey: string = 'refreshToken';
-  public userIdKey: string = 'userId';
+  public accessTokenKey = 'accessToken';
+  public refreshTokenKey = 'refreshToken';
+  public userIdKey = 'userId';
 
   public isLogged$: Subject<boolean> = new Subject<boolean>();
-  private isLogged: boolean = false;
+  private isLogged = false;
 
   constructor(private http: HttpClient) {
     this.isLogged = !!localStorage.getItem(this.accessTokenKey)

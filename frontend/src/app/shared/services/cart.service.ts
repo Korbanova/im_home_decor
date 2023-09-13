@@ -9,7 +9,7 @@ import {DefaultResponseType} from "../../../types/default-response.type";
   providedIn: 'root'
 })
 export class CartService {
-  private count: number = 0;
+  private count = 0;
   count$: Subject<number> = new Subject<number>();
 
   constructor(private http: HttpClient) {

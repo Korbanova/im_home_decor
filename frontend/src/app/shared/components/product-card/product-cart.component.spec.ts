@@ -64,7 +64,7 @@ describe('product cart', () => {
   })
 
   it('should сall removeFromCart with count 0', () => {
-    let cartServiceSpy = TestBed.inject(CartService) as jasmine.SpyObj<CartService>;
+    const cartServiceSpy = TestBed.inject(CartService) as jasmine.SpyObj<CartService>;
     cartServiceSpy.updateCart.and.returnValue(of({
         items: [
           {
@@ -101,7 +101,7 @@ describe('product cart', () => {
   })
 
   it('should call navigate for light card', () => {
-    let routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    const routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     productCartComponent.product = product;
 
     productCartComponent.isLight = true;

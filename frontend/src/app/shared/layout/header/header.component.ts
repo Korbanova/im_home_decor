@@ -18,13 +18,13 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  isLogged: boolean = false;
+  isLogged = false;
 
   @Input() categories: CategoryWithTypeType[] = [];
-  count: number = 0;
+  count = 0;
   products: ProductType[] = [];
   serverStaticPath = environment.serverStaticPath;
-  showedSearch: boolean = false;
+  showedSearch = false;
   searchField = new FormControl();
 
   constructor(private authService: AuthService,
